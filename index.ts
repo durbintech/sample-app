@@ -1,9 +1,8 @@
 import express from "express";
-import { createConnection } from "typeorm";
 import hooks from "@durbintech/app-webhooks";
 
 const main = async () => {
-  await createConnection({
+  hooks.use("typeorm", {
     type: "postgres",
     host: "localhost",
     port: 5432,
@@ -15,8 +14,6 @@ const main = async () => {
     logging: false,
     dropSchema: true,
   });
-
-  hooks.use("typeorm");
 
   const app = express();
 
@@ -33,13 +30,31 @@ const main = async () => {
 
   await hooks.arm();
 
+  app.get("/hello", (_, res) => {
+    res.send("Hello world");
+  });
+
   app.get("/check-authenticated", hooks.authenticated(), (req, res) => {
     if (req.authenticated) {
-      res.status(200).send(req.authenticated);
+      const can = hooks.addTransaction(req.authenticated, "test-unit", 10);
+      res.status(200).json({ as: req.authenticated, can });
     } else {
       res.sendStatus(400);
     }
   });
+
+  app.get(
+    "/transact",
+    hooks.authenticated(),
+    hooks.limitOrUse("test-unit", 5),
+    (req, res) => {
+      if (req.authenticated) {
+        res.status(200).json({ as: req.authenticated });
+      } else {
+        res.sendStatus(400);
+      }
+    }
+  );
 
   app.listen(4000, () => console.log("App listening on port 4000 ⚡"));
 };
