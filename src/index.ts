@@ -1,14 +1,22 @@
 import express from "express";
 import hooks from "@durbintech/app-webhooks";
 
+import {
+  APP_PORT,
+  DATABASE_HOST,
+  DATABASE_USERNAME,
+  DATABASE_PASSWORD,
+  DATABASE_NAME,
+} from "./config";
+
 const main = async () => {
   hooks.use("typeorm", {
     type: "postgres",
-    host: "localhost",
+    host: DATABASE_HOST,
     port: 5432,
-    username: "postgres",
-    password: "password",
-    database: "accounts",
+    username: DATABASE_USERNAME,
+    password: DATABASE_PASSWORD,
+    database: DATABASE_NAME,
     entities: ["src/entity/**/*.ts"],
     synchronize: true,
     logging: false,
@@ -56,7 +64,9 @@ const main = async () => {
     }
   );
 
-  app.listen(4000, () => console.log("App listening on port 4000 ⚡"));
+  app.listen(APP_PORT, "0.0.0.0", () =>
+    console.log(`App listening on port ${APP_PORT} ⚡`)
+  );
 };
 
 main().catch(console.error);
