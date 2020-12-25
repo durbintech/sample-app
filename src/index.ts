@@ -7,6 +7,8 @@ import {
   DATABASE_USERNAME,
   DATABASE_PASSWORD,
   DATABASE_NAME,
+  CLIENT_ID,
+  CLIENT_SECRET,
 } from "./config";
 
 const main = async () => {
@@ -33,8 +35,8 @@ const main = async () => {
     },
   ]);
 
-  hooks.set("client-id", "CLIENT_ID");
-  hooks.set("client-secret", "CLIENT_SECRET");
+  hooks.set("client-id", CLIENT_ID);
+  hooks.set("client-secret", CLIENT_SECRET);
 
   await hooks.arm();
 

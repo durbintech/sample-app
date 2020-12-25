@@ -16,6 +16,10 @@ export const {
   DATABASE_USERNAME = "postgres",
   DATABASE_PASSWORD = "",
   DATABASE_NAME = "app",
+
+  // App Data
+  CLIENT_ID = "",
+  CLIENT_SECRET = "",
 } = process.env;
 
 export const APP_PORT = parseInt(process.env.APP_PORT || "5000");
