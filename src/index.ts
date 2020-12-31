@@ -20,9 +20,7 @@ const main = async () => {
     password: DATABASE_PASSWORD,
     database: DATABASE_NAME,
     entities: ["src/entity/**/*.ts"],
-    synchronize: true,
     logging: false,
-    dropSchema: true,
   });
 
   const app = express();
@@ -56,7 +54,7 @@ const main = async () => {
   app.get(
     "/transact",
     hooks.authenticated(),
-    hooks.limitOrUse("test-unit", 5),
+    hooks.limitOrUse("test-unit", 1),
     (req, res) => {
       if (req.authenticated) {
         res.status(200).json({ as: req.authenticated });

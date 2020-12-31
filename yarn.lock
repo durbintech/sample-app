@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@durbintech/app-webhooks@0.9.1":
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/@durbintech/app-webhooks/-/app-webhooks-0.9.1.tgz#8e28928ef2ac6dfd7a4bae1eb3dfd4808116f9c4"
-  integrity sha512-e6SYWPuiSrmn0/Mt2rfke3MzM3WJJYcboqtW9a30GumPS29W/0tJqMqoW/fXSnz9h+M0uHucANmh4JfdHEIuog==
+"@durbintech/app-webhooks@^0.9.7":
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/@durbintech/app-webhooks/-/app-webhooks-0.9.7.tgz#a1bee8b8ff0e7aa25feaad96571682363a54a2e0"
+  integrity sha512-U1pMdoJ0RRucgChNCZDihS20b8Sffr4FGrI3N4IjN9bsuPOBqjls7HfCvR/RpjHMbRIVjTg467h9kwp6KDnT8w==
   dependencies:
     cookie-parser "^1.4.5"
     express "^4.17.1"
@@ -14,7 +14,7 @@
     ms "^2.1.3"
     mysql "^2.14.1"
     pg "^8.5.1"
-    reflect-metadata "^0.1.10"
+    reflect-metadata "^0.1.13"
     typeorm "0.2.28"
 
 "@hapi/hoek@^9.0.0":
@@ -1510,7 +1510,7 @@ readdirp@~3.5.0:
   dependencies:
     picomatch "^2.2.1"
 
-reflect-metadata@^0.1.10, reflect-metadata@^0.1.13:
+reflect-metadata@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
   integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
