@@ -42,9 +42,9 @@ const main = async () => {
     res.send("Hello world");
   });
 
-  app.get("/check-authenticated", hooks.authenticated(), (req, res) => {
+  app.get("/check-authenticated", hooks.authenticated(), async (req, res) => {
     if (req.authenticated) {
-      const can = hooks.addTransaction(req.authenticated, "test-unit", 10);
+      const can = await hooks.addTransaction(req.authenticated, "test-unit", 2);
       res.status(200).json({ as: req.authenticated, can });
     } else {
       res.sendStatus(400);
