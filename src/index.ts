@@ -1,35 +1,42 @@
-import express from "express";
 import hooks from "@durbintech/app-webhooks";
-
-import {
-  APP_PORT,
-  DATABASE_HOST,
-  DATABASE_USERNAME,
-  DATABASE_PASSWORD,
-  DATABASE_NAME,
-  CLIENT_ID,
-  CLIENT_SECRET,
-} from "./config";
+import express from "express";
+import path from "path";
+import { CLIENT_ID, CLIENT_SECRET } from "./config";
 
 const main = async () => {
   hooks.use("typeorm", {
     type: "postgres",
-    host: DATABASE_HOST,
+    host: "localhost",
     port: 5432,
-    username: DATABASE_USERNAME,
-    password: DATABASE_PASSWORD,
-    database: DATABASE_NAME,
-    entities: ["src/entity/**/*.ts"],
+    username: "postgres",
+    password: "password",
+    database: "app",
     logging: false,
+    synchronize: false,
   });
 
   const app = express();
 
+  app.get("/", (_, res) => {
+    res.sendFile(path.join(__dirname, "views", "index.html"));
+  });
+
+  hooks.use("company");
+
+  hooks.set("roles", [
+    { name: "driver", description: "For those riding the wheels" },
+    { name: "manager", description: "Relaxing on the chair" },
+  ]);
+
   hooks.set("express-app", app);
   hooks.set("billable-units", [
     {
-      name: "test-unit",
-      description: "An unit born to be tested",
+      name: "unit-1",
+      description: "Unit 🔥",
+    },
+    {
+      name: "unit-2",
+      description: "Unit ✅",
     },
   ]);
 
@@ -44,7 +51,7 @@ const main = async () => {
 
   app.get("/check-authenticated", hooks.authenticated(), async (req, res) => {
     if (req.authenticated) {
-      const can = await hooks.addTransaction(req.authenticated, "test-unit", 2);
+      const can = await hooks.addTransaction(req.authenticated, "unit-2", 1);
       res.status(200).json({ as: req.authenticated, can });
     } else {
       res.sendStatus(400);
@@ -54,7 +61,7 @@ const main = async () => {
   app.get(
     "/transact",
     hooks.authenticated(),
-    hooks.limitOrUse("test-unit", 1),
+    hooks.limitOrUse("unit-1", 1),
     (req, res) => {
       if (req.authenticated) {
         res.status(200).json({ as: req.authenticated });
@@ -64,8 +71,27 @@ const main = async () => {
     }
   );
 
-  app.listen(APP_PORT, "0.0.0.0", () =>
-    console.log(`App listening on port ${APP_PORT} ⚡`)
+  app.get(
+    "/empl-auth-check",
+    hooks.authenticated("driver"),
+    async (req, res) => {
+      if (req.authenticated) {
+        // this should use the company data
+        const can = await hooks.addTransaction(req.authenticated, "unit-2", 1);
+        res.status(200).json({
+          as: req.authenticated,
+          can,
+          employee_id: req.employee_id,
+          roles: req.roles,
+        });
+      } else {
+        res.sendStatus(400);
+      }
+    }
+  );
+
+  app.listen(5000, "0.0.0.0", () =>
+    console.log(`App listening on port 5000 ⚡`)
   );
 };
 

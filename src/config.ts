@@ -14,7 +14,7 @@ export const {
   DATABASE_HOST = "localhost",
   DATABASE_PORT = 5432,
   DATABASE_USERNAME = "postgres",
-  DATABASE_PASSWORD = "",
+  DATABASE_PASSWORD = "password",
   DATABASE_NAME = "app",
 
   // App Data
