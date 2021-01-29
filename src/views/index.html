@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APP | Home</title>
+  </head>
+  <body>
+    <div id="app" style="display: none">
+      <div>Authenticated</div>
+      <button onclick="transact()">Transact</button>
+    </div>
+    <script>
+      const rootDomain = window.location.host.substring(
+        window.location.host.indexOf(".") + 1
+      );
+
+      const main = async () => {
+        const data = await fetch(
+          `${window.location.protocol}//${rootDomain}/check-perms`,
+          { method: "POST", credentials: "include" }
+        );
+
+        const authToken = await data.json();
+
+        console.log(data);
+        console.log(authToken);
+
+        const authRes = await fetch("/authenticate", {
+          method: "POST",
+          body: JSON.stringify(authToken),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (authRes.ok && authRes.status === 200) {
+          document.getElementById("app").style.display = "block";
+          console.log("Authenticated!");
+        }
+      };
+
+      main().catch(console.error);
+
+      async function transact() {
+        try {
+          const req = await fetch("/transact");
+          if (req.status === 400) {
+            alert("Transaction Failed - " + (await req.text()));
+          } else {
+            console.log(await req.json());
+            alert("Transaction Success");
+          }
+        } catch {}
+      }
+    </script>
+  </body>
+</html>
