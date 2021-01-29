@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@durbintech/app-webhooks@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@durbintech/app-webhooks/-/app-webhooks-0.10.2.tgz#45251928e8823aa9a13ce0a654bbd4191b42237f"
-  integrity sha512-mHF+IHH3PhR/DEGTL1kdJJ2Y6YEdA5xj4Yl5cUCH9vdjezavMnTo+L8QuTYjSU3BtBN88pHmbes7li8dxR/8+Q==
+"@durbintech/app-webhooks@^0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@durbintech/app-webhooks/-/app-webhooks-0.10.3.tgz#f574e0f3aff6c1d1c41b5a2a03aa3ad37d3f424d"
+  integrity sha512-JM4pGjcKwq6iDAkiVGBHL9vxjDFMo46fkmEppTA+SZvc+n753m/Jrrv3XRrhSqf6voMx6s4/lWKXme+iiuJieg==
   dependencies:
     cookie-parser "^1.4.5"
     express "^4.17.1"
